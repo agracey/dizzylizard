@@ -1,3 +1,5 @@
+const gravity = .1
+
 game.BirdEntity = me.Entity.extend({
     init: function(x, y) {
         var settings = {};
@@ -31,42 +33,55 @@ game.BirdEntity = me.Entity.extend({
         // collision shape
         this.collided = false;
 
-        this.gravityForce = 0.2;
+        this.gravityForce = gravity;
     },
 
     update: function(dt) {
+        console.log('update')
+        console.log(me.input.pointer.pos.y)
         var that = this;
         this.pos.x = 60;
+
+        this.pos.y = me.input.pointer.pos.y
+        this.pos.x = me.input.pointer.pos.x
+
+
         if (!game.data.start) {
             return this._super(me.Entity, 'update', [dt]);
         }
         this.renderable.currentTransform.identity();
-        if (me.input.isKeyPressed('fly')) {
-            me.audio.play('wing');
-            this.gravityForce = 0.2;
-            var currentPos = this.pos.y;
 
-            this.angleTween.stop();
-            this.flyTween.stop();
+//
+
+        // if (me.input.isKeyPressed('fly')) {
+        //     me.audio.play('wing');
+        //     this.gravityForce = 0.2;
+        //     var currentPos = this.pos.y;
+
+        //     this.angleTween.stop();
+        //     this.flyTween.stop();
 
 
-            this.flyTween.to({y: currentPos - 72}, 50);
-            this.flyTween.start();
+        //     this.flyTween.to({y: currentPos - 72}, 50);
+        //     this.flyTween.start();
 
-            this.angleTween.to({currentAngle: that.maxAngleRotation}, 50).onComplete(function(angle) {
-                that.renderable.currentTransform.rotate(that.maxAngleRotation);
-            })
-            this.angleTween.start();
+        //     this.angleTween.to({currentAngle: that.maxAngleRotation}, 50).onComplete(function(angle) {
+        //         that.renderable.currentTransform.rotate(that.maxAngleRotation);
+        //     })
+        //     this.angleTween.start();
 
-        } else {
-            this.gravityForce += 0.2;
-            this.pos.y += me.timer.tick * this.gravityForce;
-            this.currentAngle += Number.prototype.degToRad(3);
-            if (this.currentAngle >= this.maxAngleRotationDown) {
-                this.renderable.currentTransform.identity();
-                this.currentAngle = this.maxAngleRotationDown;
-            }
-        }
+        // } else {
+        //     this.gravityForce += gravity;
+        //     this.pos.y += me.timer.tick * this.gravityForce;
+        //     this.currentAngle += Number.prototype.degToRad(3);
+        //     if (this.currentAngle >= this.maxAngleRotationDown) {
+        //         this.renderable.currentTransform.identity();
+        //         this.currentAngle = this.maxAngleRotationDown;
+        //     }
+        // }
+
+//
+        
         this.renderable.currentTransform.rotate(this.currentAngle);
         me.Rect.prototype.updateBounds.apply(this);
 

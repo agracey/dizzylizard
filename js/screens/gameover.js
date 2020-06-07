@@ -88,7 +88,7 @@ game.GameOverScreen = me.ScreenObject.extend({
                 this.font.draw(
                     renderer,
                     this.topSteps,
-                    me.game.viewport.width/2 - stepsText.width/2 - 60,
+                    me.game.viewport.width/2 - topStepsText.width/2 - 60,
                     me.game.viewport.height/2 + 50
                 );
             }
