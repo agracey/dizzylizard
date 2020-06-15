@@ -3,5 +3,7 @@
 # We have created a delivery pipeline
 applications:
  - name: dizzylizard
-   buildpack: nodejs_buildpack
+   buildpacks: 
+   - https://github.com/agracey/buildpack-minimal-npm-build.git
+   - staticfile_buildpack
    memory: 32M
